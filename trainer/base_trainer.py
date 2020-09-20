@@ -30,6 +30,14 @@ class BaseTrainer(object):
         self.metrics = metrics
         self.config = config
         self.model.initialize_weight()
+
+        #------------------------------------load checkpoint
+        if self.config.CONFIG['load_model']:
+            model_filename = self.config.LoadModel['filename']          #test时加载的模型位置
+            self._load_checkpoint(model_filename)
+
+
+
         #------------------------------------GPU配置
         self.use_gpu = False
         self.device_ids = [0]
@@ -52,10 +60,6 @@ class BaseTrainer(object):
         self.log_filename = os.path.join(self.checkpoint_dir, self.config.Checkpoint['log_file'])
         self.save_period = self.config.Checkpoint['save_period']
         
-        #------------------------------------load checkpoint
-        if self.config.CONFIG['load_model']:
-            model_filename = self.config.LoadModel['filename']          #test时加载的模型位置
-            self._load_checkpoint(model_filename)
 
         #------------------------------------figure配置
         self.figure_dir = os.path.join('figure', self.config.CONFIG['model_name'] )

@@ -1,8 +1,11 @@
+import datetime
+import time
+
 class Config(object):
     def __init__(self):
         self.ENV = 'default'            # 当前的环境参数
         self.Introduce = 'Not at the moment'    #对 此次实验的描述
-        self.VERSION = 1                # 当前版本
+        self.VERSION = 2                # 当前版本
 
 
         #------------------------------------------------GPU配置
@@ -14,7 +17,7 @@ class Config(object):
 
         self.CONFIG = dict(
             dataset_name = 'Rml2016_10a',     # 所选择的数据集的名称
-            model_name = 'Baseline_ResNet',       # 攻击模型的名称
+            model_name = 'Baseline_VGG',       # 攻击模型的名称
             criterion_name = 'CrossEntropyLoss',       # 失函数的名称
             optimizer_name = 'Adam',     # 优化器的名称（torch.nn中）
             metrics = ['accuary'],        # 评价标准的名称（metric文件夹中）
@@ -72,7 +75,7 @@ class Config(object):
 
         #------------------------------------------------模型加载
         self.LoadModel = dict(
-            filename = './checkpoint/Rml2016_10a_Baseline_ResNet_V1/Baseline_ResNet_Epoch99.pkl',     #加载模型的位置，与上面模型要对应
+            filename = './checkpoint/Rml2016_10a_Baseline_VGG_V2/Baseline_VGG_Epoch99.pkl',     #加载模型的位置，与上面模型要对应
         )
 
 
@@ -83,7 +86,9 @@ class Config(object):
                 self.VERSION),                          # checkpoint 所在的文件夹
             checkpoint_file_format = self.CONFIG['model_name']+'_Epoch{}.pkl',     #模型文件名称格式，分别表示模型名称、Epoch
             model_best = 'model_best.ptk',            #最好的模型名称，暂时未用到
-            log_file = 'log.log',                         #log文件名称
+            log_file = 'log_{}_{}.log'.format(
+                time.strftime("%m-%d %H:%M"),self.Introduce
+            ),                         #log文件名称
             save_period = 1,                            #模型的存储间隔
         )
 

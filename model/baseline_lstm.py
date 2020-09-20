@@ -11,6 +11,8 @@ class Baseline_LSTM(BaseModel):
         self.lstm1 = nn.LSTM(input_size= 128, hidden_size= 128, num_layers= 3, batch_first= True)
         self.lstm2 = nn.LSTM(input_size= 128, hidden_size= 128, num_layers= 3, batch_first= True)
 
+        self.transfomer1 = nn.Transormer
+
         self.fc1 = nn.Linear(in_features= 256, out_features= output_dim)
 
     def forward(self, x):
